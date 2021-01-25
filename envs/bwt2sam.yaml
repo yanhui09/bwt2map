@@ -1,0 +1,7 @@
+# conda dependence for naonfilt
+name: bwt2sam
+channels:
+  - bioconda
+dependencies:
+  - bowtie2
+  - samtools

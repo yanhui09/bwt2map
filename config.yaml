@@ -1,0 +1,4 @@
+# This file should contain everything to configure the workflow on a global scale.
+fq_dir: "/mnt/md0/RAW_DATA/METAGENOME/fqs"
+results_dir: "/mnt/md0/RAW_DATA/METAGENOME/results"
+ref_fa: "/mnt/md0/RAW_DATA/METAGENOME/SIRV2M8.fa"
