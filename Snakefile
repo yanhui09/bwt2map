@@ -13,8 +13,9 @@ BATCH, LIB_ID = glob_wildcards(INPUT_DIR + "/{batch, .*\d+}_{lib_id, .*\d+}")
 
 rule all:
     input: 
-        expand(OUTPUT_DIR + "/depth/{batch}/{lib_id}.depth", batch = BATCH, lib_id = LIB_ID)
-
+        #expand(OUTPUT_DIR + "/depth/{batch}/{lib_id}.depth", batch = BATCH, lib_id = LIB_ID),
+        expand(OUTPUT_DIR + "/depth_analysis/{batch}", batch = BATCH)
+    
 rule bwt2_build:
     input:
         REF_FA
@@ -83,4 +84,22 @@ rule depth_per_base:
     log:
         OUTPUT_DIR + "/logs/depth/{batch}/{lib_id}.log"
     shell:
-        "(samtools depth {input} > {output}) 2>> {log}"
+        "(samtools depth -a {input} > {output}) 2>> {log}"
+
+rule depth_analysis:
+    input:
+        expand(OUTPUT_DIR + "/depth/{batch}/{lib_id}.depth", batch = BATCH, lib_id = LIB_ID)
+    output:
+        directory(OUTPUT_DIR + "/depth_analysis/{batch}")
+    params:
+        depth_dir = OUTPUT_DIR + "/depth/{batch}",
+        ref = OUTPUT_DIR + "/depth/{batch}/XIC16.depth"
+    conda:
+        "envs/bwt2sam.yaml"
+    log:
+        OUTPUT_DIR + "/logs/depth_analysis_{batch}.log"
+    shell:
+        """
+        mkdir {output}
+        scripts/plot_depth.py -d {params.depth_dir} -r {output} -f {params.ref} -w 500
+        """
