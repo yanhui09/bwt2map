@@ -56,7 +56,7 @@ rule bwt2_map:
         "envs/bwt2sam.yaml"
     log: 
         OUTPUT_DIR + "/logs/bwt2_map/{batch}/{lib_id}.log"
-    threads: 8
+    threads: config["threads_bwt2"]
     shell:
         "(bowtie2 -p {threads} -x {params.bwt2_build} -1 {input.r1} -2 {input.r2} | samtools view -bS - > {output}) 2>> {log}"
 

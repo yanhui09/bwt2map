@@ -2,3 +2,4 @@
 fq_dir: "/mnt/md0/RAW_DATA/METAGENOME/fqs"
 results_dir: "/mnt/md0/RAW_DATA/METAGENOME/results"
 ref_fa: "/mnt/md0/RAW_DATA/METAGENOME/SIRV2M8.fa"
+threads_bwt2: 6
